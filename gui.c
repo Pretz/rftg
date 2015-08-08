@@ -13820,29 +13820,35 @@ int main(int argc, char *argv[])
 	advanced_item = gtk_menu_item_new_with_mnemonic("_Advanced Options...");
 	quit_item = gtk_menu_item_new_with_mnemonic("_Quit");
 
+#ifdef __APPLE__
+#define MASK_PRIMARY GDK_META_MASK
+#else
+#define MASK_PRIMARY GDK_CONTROL_MASK
+#endif
+
 	/* Add accelerators for game menu items */
 	gtk_widget_add_accelerator(new_item, "activate", window_accel,
-	                           'N', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'N', GDK_META_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(new_parameters_item, "activate", window_accel,
-	                           'N', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'N', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(campaign_item, "activate", window_accel,
-	                           'C', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'C', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(load_item, "activate", window_accel,
-	                           'L', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'L', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(replay_item, "activate", window_accel,
-	                           'P', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'P', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(save_item, "activate", window_accel,
-	                           'S', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'S', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(export_item, "activate", window_accel,
-	                           'E', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'E', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(option_item, "activate", window_accel,
-	                           'G', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'G', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(advanced_item, "activate", window_accel,
-	                           'A', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'A', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(quit_item, "activate", window_accel,
-	                           'Q', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'Q', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 
 	/* Add items to game menu */
 	gtk_menu_shell_append(GTK_MENU_SHELL(game_menu), new_item);
@@ -13869,14 +13875,14 @@ int main(int argc, char *argv[])
 
 	/* Add accelerators for undo menu items */
 	gtk_widget_add_accelerator(undo_item, "activate", window_accel,
-	                           'Z', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'Z', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(undo_round_item, "activate", window_accel,
-	                           'Z', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'Z', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(redo_item, "activate", window_accel,
-	                           'Y', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'Y', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(redo_round_item, "activate", window_accel,
-	                           'Y', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'Y', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 
 	/* Add items to undo menu */
@@ -13897,12 +13903,12 @@ int main(int argc, char *argv[])
 
 	/* Add accelerators for network menu items */
 	gtk_widget_add_accelerator(connect_item, "activate", window_accel,
-	                           'R', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'R', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(disconnect_item, "activate", window_accel,
-	                           'D', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'D', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(resign_item, "activate", window_accel,
-	                           'R', GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+	                           'R', GDK_SHIFT_MASK | MASK_PRIMARY,
 	                           GTK_ACCEL_VISIBLE);
 
 	/* Add items to network menu */
@@ -13919,7 +13925,7 @@ int main(int argc, char *argv[])
 
 	/* Add accelerators for debug menu items */
 	gtk_widget_add_accelerator(debug_card_item, "activate", window_accel,
-	                           'D', GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	                           'D', MASK_PRIMARY, GTK_ACCEL_VISIBLE);
 
 	/* Add items to debug menu */
 	gtk_menu_shell_append(GTK_MENU_SHELL(debug_menu), debug_card_item);
@@ -14414,7 +14420,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(create_button, "key-signal",
-	                           window_accel, GDK_r, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_r, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(create_button), "key-signal",
@@ -14429,7 +14435,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(join_button, "key-signal",
-	                           window_accel, GDK_j, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_j, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(join_button), "key-signal",
@@ -14444,7 +14450,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(leave_button, "key-signal",
-	                           window_accel, GDK_l, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_l, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(leave_button), "key-signal",
@@ -14459,7 +14465,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(kick_button, "key-signal",
-	                           window_accel, GDK_k, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_k, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(kick_button), "key-signal",
@@ -14474,7 +14480,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(addai_button, "key-signal",
-	                           window_accel, GDK_i, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_i, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(addai_button), "key-signal",
@@ -14489,7 +14495,7 @@ int main(int argc, char *argv[])
 
 	/* Add handler for keypresses */
 	gtk_widget_add_accelerator(start_button, "key-signal",
-	                           window_accel, GDK_s, GDK_CONTROL_MASK, 0);
+	                           window_accel, GDK_s, MASK_PRIMARY, 0);
 
 	/* Connect key-signal */
 	g_signal_connect(G_OBJECT(start_button), "key-signal",
